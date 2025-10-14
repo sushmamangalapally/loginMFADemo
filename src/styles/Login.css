@@ -1,0 +1,68 @@
+.center-section {
+    min-height: 100vh;
+    padding: 40px 16px;
+
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.card-container {
+    max-width: 860px;
+    margin: 0 auto;
+    background: transparent;
+    min-width: 560px;
+}
+
+.card {
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    padding: 28px;
+    background: var(--card);
+}
+
+.card h1.title {
+    font-weight: 800;
+    letter-spacing: .2px;
+    font-size: 55px;
+    text-align: center;
+    margin: 24px 0 6px;
+}
+
+.input-group {
+    margin: 16px 0 18px;
+}
+
+.input-group label {
+    margin: 0 0 10px;
+    text-align: left;
+    display: block;
+}
+
+.input-group input[type="email"] {
+    font-size: 1rem;
+    line-height: 1rem;
+    border-radius: 0px;
+    color: rgb(20, 24, 36);
+    height: 3rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border: 1px solid rgb(55, 59, 69);
+    width: 100%;
+}
+
+/* .login-form button {
+    padding: 0px 1rem;
+    width: 100%;
+    border-radius: 0.25rem;
+    height: 3rem;
+    background: rgb(233, 233, 237);
+    color: rgb(173, 175, 179);
+    background: var(--brand);
+    color: rgb(244, 244, 246);
+    border: none;
+}
+
+ */
+
+
