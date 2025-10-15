@@ -107,19 +107,19 @@ export default function HomePage() {
         <h2>Your Dashboard</h2>
         <div className="class-info">
           <div className="user-info">
-            <label for="email">User Name: </label>
+            <label htmlFor="email">User Name: </label>
             <input type="text" id="name" name="name" value={userName} 
             onChange={(e) => setUserName(e.target.value)}
             disabled={user.role === 'user'}/>
           </div>
             <div className="user-info">
-              <label for="email">User email: </label>
+              <label htmlFor="email">User email: </label>
               <input type="email" id="emailField" name="emailAddress" value={userEmail} onChange={(e) => setUserEmail(e.target.value)} disabled={user.role === 'user'}/>
             </div>
         </div>
 
-        <div class="toolbar">
-          <div class="title">All Assignments</div>
+        <div className="toolbar">
+          <div className="title">All Assignments</div>
         </div>
 
         {error && (
@@ -129,7 +129,7 @@ export default function HomePage() {
           </div>
         )}
           
-        <div class="card" role="region" aria-label="Files table">
+        <div className="card" role="region" aria-label="Files table">
           <table>
             <thead>
               <tr>
@@ -206,8 +206,8 @@ export default function HomePage() {
           </table>
         </div>
         {user.role === 'admin' && (
-          <div class="create-assignment">
-            <button class="btn primary cr-assgmt" onClick={() => setShowCreateAssignment(true)}>Create Assignment</button>
+          <div className="create-assignment">
+            <button className="btn primary cr-assgmt" onClick={() => setShowCreateAssignment(true)}>Create Assignment</button>
           </div>
         )}
         {
@@ -217,7 +217,7 @@ export default function HomePage() {
                 handleAssignmentSubmit={handleAssignmentSubmit}
               />
               <div className="form-actions-cancel">
-                <button class="btn cr-assgmt" onClick={() => setShowCreateAssignment(false)}>Cancel</button>
+                <button className="btn cr-assgmt" onClick={() => setShowCreateAssignment(false)}>Cancel</button>
               </div>
             </div>
           )

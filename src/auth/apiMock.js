@@ -31,6 +31,13 @@ function generateOTPCode() {
 }
 
 /**
+ * @description Mock as fetching API for miliseconds using setTimeout
+ *
+ * @returns {string} Miliseconds
+ */
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+/**
  * @description Retrieves time of seconds left when OTP was requested
  *
  * @returns {number} Seconds Left
@@ -72,31 +79,54 @@ async function getMockUsers() {
  * @returns {Promise<Object>} A Promise that resolves with the JSON data
  * @throws {Error} If login fails
  */
-export function apiLogin(email, password) {
-	return new Promise((resolve, reject) => {
-		const users = getMockUsers();
-		if (!users[email]) {
-			return reject(new Error('Incorrect username or password.'));
-		}
-		if (users[email] && btoa(String(password)) !== users[email]?.password) {
-			reject(new Error('Incorrect username or password!'));
-			return;
-		}
-		setTimeout(() => {
-			currentOTPCode = generateOTPCode();
-			pendingEmail = email;
+export async function apiLogin(email, password) {
+	await sleep(400);
 
-			const now = new Date();
-			codeExpiresAt = new Date(now.getTime() + (CODE_VALID_FOR))
-			resendAvailableAt = new Date(now.getTime() + (RESEND_TIME_TO_SEND))
+  const users = await getMockUsers();
 
-			resolve({
-					mfaID: 'abcMFAID',
-					method: 'email',
-					email,
-			})
-		}, 400);
-  });
+	if (!users[email]) {
+		throw(new Error('Incorrect username or password!'));
+	}
+
+	if (users[email] && btoa(String(password)) !== users[email]?.password) {
+		throw(new Error('Incorrect username or password!'));
+	}
+
+	await sleep(400);
+
+	currentOTPCode = generateOTPCode();
+  pendingEmail = email;
+
+  const now = Date.now();
+  codeExpiresAt = now + CODE_VALID_FOR;
+  resendAvailableAt = now + RESEND_TIME_TO_SEND;
+
+  return { mfaID: 'abcMFAID', method: 'email', email };
+	// return new Promise(async (resolve, reject) => {
+	// 	const users = await getMockUsers();
+	// 	console.log(users)
+	// 	if (!users[email]) {
+	// 		return reject(new Error('Incorrect username or password.'));
+	// 	}
+	// 	if (users[email] && btoa(String(password)) !== users[email]?.password) {
+	// 		reject(new Error('Incorrect username or password!'));
+	// 		return;
+	// 	}
+	// 	setTimeout(() => {
+	// 		currentOTPCode = generateOTPCode();
+	// 		pendingEmail = email;
+
+	// 		const now = new Date();
+	// 		codeExpiresAt = new Date(now.getTime() + (CODE_VALID_FOR))
+	// 		resendAvailableAt = new Date(now.getTime() + (RESEND_TIME_TO_SEND))
+
+	// 		resolve({
+	// 				mfaID: 'abcMFAID',
+	// 				method: 'email',
+	// 				email,
+	// 		})
+	// 	}, 400);
+  // });
 }
 
 /**
@@ -106,29 +136,47 @@ export function apiLogin(email, password) {
  * @returns {Promise<Object>} A Promise that resolves with success JSON data
  * @throws {Error} If OTP fails
  */
-export function apiVerify(mfaID, otpCode) {
-	return new Promise((resolve, reject) => {
-		setTimeout(() => {
-			const users = getMockUsers();
-			if (!pendingEmail) {
-				reject(new Error('No auth in process!'));
-				return;
-			}
-			const now = Date.now();
-			if (now > codeExpiresAt) {
-				reject(new Error('Time is up! Code is expired. Try again!'));
-				return;
-			}
-			if (otpCode === currentOTPCode) {
-				const user = users[pendingEmail];
-				pendingEmail = null;
-				resolve({user, method: 'mfa'});
-			} else {
-				reject(new Error('Invalid OTP Code!'));
-				return;
-			}
-		}, 400);
-	});
+export async function apiVerify(mfaID, otpCode) {
+	await sleep(400);
+
+  const users = await getMockUsers();
+
+  if (!pendingEmail) {
+		throw(new Error('No auth in process!'));
+	}
+  if (Date.now() > codeExpiresAt) {
+		throw(new Error('Time is up! Code is expired. Try again!'));
+	}
+  if (otpCode !== currentOTPCode) {
+		throw(new Error('Invalid OTP Code!'));
+	}
+  const user = users[pendingEmail];
+  pendingEmail = null;
+  return { user, method: 'mfa' };
+
+	// return new Promise( (resolve, reject) => {
+	// 	setTimeout(async () => {
+	// 		const users = await getMockUsers();
+	// 			console.log(users)
+	// 		if (!pendingEmail) {
+	// 			reject(new Error('No auth in process!'));
+	// 			return;
+	// 		}
+	// 		const now = Date.now();
+	// 		if (now > codeExpiresAt) {
+	// 			reject(new Error('Time is up! Code is expired. Try again!'));
+	// 			return;
+	// 		}
+	// 		if (otpCode === currentOTPCode) {
+	// 			const user = users[pendingEmail];
+	// 			pendingEmail = null;
+	// 			resolve({user, method: 'mfa'});
+	// 		} else {
+	// 			reject(new Error('Invalid OTP Code!'));
+	// 			return;
+	// 		}
+	// 	}, 400);
+	// });
 }
 
 /**
@@ -136,22 +184,33 @@ export function apiVerify(mfaID, otpCode) {
  * @returns {Promise<Object>} A Promise that resolves with success JSON data
  * @throws {Error} If resend OTP fails
  */
-export function apiResend() {
-	return new Promise((resolve, reject) => {
-			const now = Date.now();
-			if (now < resendAvailableAt) {
-					return reject(new Error("Please wait before resending"));
-			}
+export async function apiResend() {
+	const now = Date.now();
+	if (now < resendAvailableAt) {
+			throw(new Error('Please wait before resending'));
+	}
+	await sleep(200);
+	currentOTPCode = generateOTPCode();
+	const newNow = Date.now();
+	codeExpiresAt = newNow + CODE_VALID_FOR;
+	resendAvailableAt = newNow + RESEND_TIME_TO_SEND;
+  return { eventOccured: 'resent OTP' };
 
-			setTimeout(() => {
-					currentOTPCode = generateOTPCode();
-					const now = Date.now();
-					codeExpiresAt = now + CODE_VALID_FOR;
-					resendAvailableAt = now + RESEND_TIME_TO_SEND;
+	// return new Promise((resolve, reject) => {
+	// 		const now = Date.now();
+	// 		if (now < resendAvailableAt) {
+	// 				return reject(new Error("Please wait before resending"));
+	// 		}
 
-					resolve({ eventOccured: 'resent OTP'});
-			}, 200);
-	})
+	// 		setTimeout(() => {
+	// 				currentOTPCode = generateOTPCode();
+	// 				const now = Date.now();
+	// 				codeExpiresAt = now + CODE_VALID_FOR;
+	// 				resendAvailableAt = now + RESEND_TIME_TO_SEND;
+
+	// 				resolve({ eventOccured: 'resent OTP'});
+	// 		}, 200);
+	// })
 }
 
 /**
@@ -162,29 +221,49 @@ export function apiResend() {
  * @returns {Promise<Object>} A Promise that resolves with success JSON data
  * @throws {Error} If user already exists
  */
-export function apiAddUser(name, email, password) {
-	return new Promise((resolve, reject) => {
-		const existingUsers = getMockUsers() || [];
-		if (existingUsers[email]) {
-			return reject(new Error("This user already exists. Try signing in."));
-		}
+export async function apiAddUser(name, email, password) {
+	const existingUsers = await getMockUsers() || [];
+	if (existingUsers[email]) {
+		throw(new Error("This user already exists. Try signing in."));
+	}
 
-		setTimeout(() => {
-			const newUser = {
-				id: existingUsers.length+1,
-				email: email,
-				password: btoa(password),
-				name: name,
-				role: 'user'
-			}
+	const newUser = {
+		id: existingUsers.length+1,
+		email: email,
+		password: btoa(password),
+		name: name,
+		role: 'user'
+	}
 			
-			// Add the new user to the array
-			existingUsers[email] = newUser;
+	// Add the new user to the array
+	existingUsers[email] = newUser;
 			
-			// Save the updated array back to sessionStorage
-			sessionStorage.setItem('mockUsers', JSON.stringify(existingUsers));
-			resolve({newUser});
-		}, 200);
-	})
+	// Save the updated array back to sessionStorage
+	sessionStorage.setItem('mockUsers', JSON.stringify(existingUsers));
+	return({newUser});
+
+	// return new Promise((resolve, reject) => {
+	// 	const existingUsers = getMockUsers() || [];
+	// 	if (existingUsers[email]) {
+	// 		return reject(new Error("This user already exists. Try signing in."));
+	// 	}
+
+	// 	setTimeout(() => {
+	// 		const newUser = {
+	// 			id: existingUsers.length+1,
+	// 			email: email,
+	// 			password: btoa(password),
+	// 			name: name,
+	// 			role: 'user'
+	// 		}
+			
+	// 		// Add the new user to the array
+	// 		existingUsers[email] = newUser;
+			
+	// 		// Save the updated array back to sessionStorage
+	// 		sessionStorage.setItem('mockUsers', JSON.stringify(existingUsers));
+	// 		resolve({newUser});
+	// 	}, 200);
+	// })
 
 }

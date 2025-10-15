@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { apiLogin, apiVerify, apiResend, remainingTimeLeft, apiAddUser } from "./apiMock";
 import { AuthContext } from './AuthContext';
 
@@ -82,7 +82,7 @@ export function AuthProvider({ children }) {
 		setStage('login');
 	}
 
-	const backtoLogin = () => {
+	const backToLogin = () => {
 		setLoading(false);
 		setError(null);
 		setUser(null);
@@ -107,26 +107,13 @@ export function AuthProvider({ children }) {
 		}
 	}
 
-	const value = {
-		stage,
-		loading,
-		error,
-		email,
-		mfaID,
-		user,
-		timeoutLeft,
-		setTimeoutLeft,
-		startLogin,
-		verifyOTPCode,
-		resendOTPCode,
-		logout,
-		backtoLogin,
-		clearError,
-		createLogin
+	const contextValue = {
+		stage, loading, error, email, mfaID, user, timeoutLeft,
+		startLogin, verifyOTPCode, resendOTPCode, logout, backToLogin, clearError, createLogin,
 	};
 
 	return (
-		<AuthContext.Provider value={value}>
+		<AuthContext.Provider value={contextValue}>
 			{children}
 		</AuthContext.Provider>
 	);

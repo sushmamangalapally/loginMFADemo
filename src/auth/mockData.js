@@ -26,18 +26,26 @@ export const assignments = [
 ];
 
 export const users = {
-    'admin@sushma.com': {
-        id: 1,
-        email: 'admin@sushma.com',
-        password: 'cGFzc3dvcmQxIQ==', // password1!
-        name: 'Adam the Admin',
-        role: 'admin'
-    },
-    'sushma@sushma.com': {
-        id: 2,
-        email: 'sushma@sushma.com',
-        password: 'cGFzc3dvcmQyIQ==', // password2!
-        name: 'Sushma the User',
-        role: 'user'
-    }
+  'admin@sushma.com': {
+    id: 1,
+    email: 'admin@sushma.com',
+    password: 'cGFzc3dvcmQxIQ==', // password1!
+    name: 'Adam the Admin',
+    role: 'admin'
+  },
+  'sushma@sushma.com': {
+    id: 2,
+    email: 'sushma@sushma.com',
+    password: 'cGFzc3dvcmQyIQ==', // password2!
+    name: 'Sushma the User',
+    role: 'user'
+  },
+  'user@example.com': {
+    id: 3,
+    email: 'user@example.com',
+    password: '', // password3!
+    name: 'User',
+    role: 'user'
+  }
+  
 };

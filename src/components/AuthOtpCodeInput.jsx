@@ -95,9 +95,13 @@ export default function AuthOtpCodeInput() {
 			<div className="resend-section">
 				<p className="timer-text">Remaining time: {timeoutLeft}s</p>
 				<p
-					className="resend-text"
-					disabled={timeoutLeft > 0}>Didn’t get the code? <span
-					onClick={resendOTPCode}>Resend</span></p>
+					className="resend-text">Didn’t get the code? </p>
+				<button
+					onClick={resendOTPCode}
+					disabled={timeoutLeft > 0 || loading}
+					className="resend-button">
+						Resend Code
+				</button>
 			</div>
 		</div>
 	);
