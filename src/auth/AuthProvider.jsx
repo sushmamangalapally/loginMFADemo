@@ -16,9 +16,15 @@ export function AuthProvider({ children }) {
 
 	/* ---------------- Side Effects ---------------- */
 	useEffect(() => {
+		const stored = localStorage.getItem('authUser');
+		if (stored) {
+			setUser(JSON.parse(stored));
+			setStage('home');
+		}
+	}, []);
+
+	useEffect(() => {
 		const timeoutId = setInterval(() => {
-			// const tick = () => setTimeout(remainingTimeLeft());
-			// tick();
 			if (stage !== 'mfa') {
 				return;
 			}
@@ -56,6 +62,7 @@ export function AuthProvider({ children }) {
 			setError(null);
 			const results = await apiVerify(mfaID, otpCode);
 			setUser(results.user);
+			localStorage.setItem('authUser', JSON.stringify(results.user));
 			setStage('home');
 		} catch (err) {
 			setError(err.message || 'Verification failed. Try logging in again.');
@@ -79,6 +86,7 @@ export function AuthProvider({ children }) {
 		setUser(null);
 		setMfaID(null);
 		setTimeoutLeft(0);
+		localStorage.removeItem("authUser");
 		setStage('login');
 	}
 

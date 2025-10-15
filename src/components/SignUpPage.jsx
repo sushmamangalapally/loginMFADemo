@@ -105,8 +105,11 @@ export default function SignUpPage() {
 						onBlur={validateName} 
 						placeholder="Your name"
 						onChange={handleNameChange}
-						required />
-					{nameError && <p className="error-text">{nameError}</p>}
+						required
+						aria-required="true"
+						aria-describedby="nameHelp"
+					/>
+					{nameError && <p id="nameHelp" className="error-text">{nameError}</p>}
 				</div>
 				<div className="input-group">
 					<label htmlFor="email">Email Address</label>
@@ -118,8 +121,11 @@ export default function SignUpPage() {
 							onBlur={validateEmail} 
 							placeholder="yourdomain@company.com"
 							onChange={handleEmailChange}
-							required />
-						{emailError && <p className="error-text">{emailError}</p>}
+							required
+							aria-required="true"
+							aria-describedby="emailHelp"
+						/>
+						{emailError && <p id="emailHelp" className="error-text">{emailError}</p>}
 				</div>
 				<div className="input-group">
 					<label htmlFor="password">Password</label>
@@ -130,8 +136,11 @@ export default function SignUpPage() {
 							value={password}
 							onBlur={validatePassword} 
 							onChange={handlePasswordChange}
-							required />
-						{passwordError && <p className="error-text">{passwordError}</p>}
+							required
+							aria-required="true"
+							aria-describedby="pwHelp"
+						/>
+						{passwordError && <p id="pwHelp" className="error-text">{passwordError}</p>}
 				</div>
 					<div className="input-group">
 						<label htmlFor="password">Confirm Password</label>
@@ -141,8 +150,11 @@ export default function SignUpPage() {
 								name="confirmPassword"
 								onBlur={validateConfirmPassword} 
 								onChange={handleConfirmPasswordChange}
-								required />
-							{confirmPasswordError && <p className="error-text">{confirmPasswordError}</p>}
+								required
+								aria-required="true"
+								aria-describedby="cpwHelp"
+						/>
+							{confirmPasswordError && <p id="cpwHelp" className="error-text">{confirmPasswordError}</p>}
 					</div>
 					<button
 						disabled={buttonDisabled|| error || loading}

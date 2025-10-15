@@ -87,8 +87,8 @@ export default function HomePage() {
       <aside>
         <nav>
           <img src={nounPersonIcon} className="profile-picture-icon" alt="Profile Picture Icon" />
-          <p className="user-info">{userName}</p>
-          <p className="user-info">{userEmail}</p>
+          <p className="user-info user-name">{userName}</p>
+          <p className="user-info user-email">{userEmail}</p>
           <div className="nav-links">
             <p className="active">Home</p>
             <p >All Assignments</p>
@@ -124,7 +124,7 @@ export default function HomePage() {
 
         {error && (
           <div className="error-message">
-            <p>{error}</p>
+            <p role="alert">{error}</p>
             <p>Please come back later to try again.</p>
           </div>
         )}

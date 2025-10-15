@@ -15,7 +15,8 @@ input.otp-input {
 }
 
 input.otp-input:focus {
-    border: 2px solid var(--border-focus);
+    border: 5px solid var(--border-focus);
+    /* border: 5px solid yellow; */
 }
 
 p.error-text {

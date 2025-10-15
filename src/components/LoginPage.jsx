@@ -69,8 +69,11 @@ export default function LoginPage() {
 										name="email"
 										placeholder="yourdomain@company.com"
 										onChange={handleEmailChange}
-										required />
-									{errorEmail && <p className="error-text">{errorEmail}</p>}
+										required
+										aria-required="true"
+										aria-describedby="emailHelp"
+									/>
+									{errorEmail && <p id="emailHelp" className="error-text">{errorEmail}</p>}
 								</div>
 								<div className="input-group">
 									<label htmlFor="password">Password</label>
@@ -79,7 +82,9 @@ export default function LoginPage() {
 										id="password"
 										name="password"
 										onChange={handlePasswordChange}
-										required />
+										required
+										aria-required="true"
+									/>
 								</div>
 								<button
 									type="submit"

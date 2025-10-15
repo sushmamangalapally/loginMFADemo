@@ -43,9 +43,8 @@ export const users = {
   'user@example.com': {
     id: 3,
     email: 'user@example.com',
-    password: '', // password3!
+    password: 'cGFzc3dvcmQzIQ==', // password3!
     name: 'User',
     role: 'user'
   }
-  
 };

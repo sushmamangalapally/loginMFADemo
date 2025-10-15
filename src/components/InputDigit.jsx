@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import '../styles/Auth.css';
-export default function InputDigit({ value, isFocused, ...props}) {
+export default function InputDigit({ index, value, isFocused, ...props}) {
   /* ---------------- Ref ---------------- */
   const inputRef = useRef(null);
 
@@ -15,9 +15,15 @@ export default function InputDigit({ value, isFocused, ...props}) {
     <input
       type="text"
       ref={inputRef}
+      pattern="[0-9]*"
       maxLength="1"
       value={value}
-      className='otp-input'
+      name={`otp-${index}`}
+      id={`otp-${index}`}
+      data-otp-index={index}
+      className={ `otp-input ${isFocused ? 'focused' : ''}` }
+      
+      // className={'otp-input'}
       {...props}
     />
   )

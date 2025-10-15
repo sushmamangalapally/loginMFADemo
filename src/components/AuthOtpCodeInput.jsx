@@ -14,23 +14,24 @@ export default function AuthOtpCodeInput() {
 
 	/* ---------------- Events and Handlers ---------------- */
 	function onFocus(index) {
-			setFocusedIndex(index);
+		setFocusedIndex(index);
 	}
 
 	const handleChange = (e, index) => {
 		const value = e.target.value;
 		if (/[^0-9]/.test(value)) {
-				return;
+			return;
 		}
 		const newCode = [...code];
 		newCode[index] = value;
 		setCode(newCode);
 		if (value && index < INPUT_LENGTH - 1) {
-				onFocus(index + 1);
+			onFocus(index + 1);
 		}
 
 		if (newCode.every(num => num !== '')) {
-				verifyOTPCode(newCode.join(''));
+			verifyOTPCode(newCode.join(''));
+			setFocusedIndex(0);
 		}
 	};
 
@@ -66,7 +67,7 @@ export default function AuthOtpCodeInput() {
 				{code.map((num, index) => (
 					<InputDigit
 						key={index}
-						value={num}
+						index={index}
 						onFocus={() => onFocus(index)}
 						isFocused={focusedIndex === index}
 						onChange={(e) => handleChange(e, index)}
@@ -90,7 +91,7 @@ export default function AuthOtpCodeInput() {
 				</button>
 			</form>
 
-			{error && <p className="error-text">{error}</p>}
+			{error && <p className="error-text" role="alert">{error}</p>}
 
 			<div className="resend-section">
 				<p className="timer-text">Remaining time: {timeoutLeft}s</p>

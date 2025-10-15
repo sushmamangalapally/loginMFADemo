@@ -35,7 +35,7 @@ function generateOTPCode() {
  *
  * @returns {string} Miliseconds
  */
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve({event: 'Sleep Success'}), ms));
 
 /**
  * @description Retrieves time of seconds left when OTP was requested
@@ -102,31 +102,6 @@ export async function apiLogin(email, password) {
   resendAvailableAt = now + RESEND_TIME_TO_SEND;
 
   return { mfaID: 'abcMFAID', method: 'email', email };
-	// return new Promise(async (resolve, reject) => {
-	// 	const users = await getMockUsers();
-	// 	console.log(users)
-	// 	if (!users[email]) {
-	// 		return reject(new Error('Incorrect username or password.'));
-	// 	}
-	// 	if (users[email] && btoa(String(password)) !== users[email]?.password) {
-	// 		reject(new Error('Incorrect username or password!'));
-	// 		return;
-	// 	}
-	// 	setTimeout(() => {
-	// 		currentOTPCode = generateOTPCode();
-	// 		pendingEmail = email;
-
-	// 		const now = new Date();
-	// 		codeExpiresAt = new Date(now.getTime() + (CODE_VALID_FOR))
-	// 		resendAvailableAt = new Date(now.getTime() + (RESEND_TIME_TO_SEND))
-
-	// 		resolve({
-	// 				mfaID: 'abcMFAID',
-	// 				method: 'email',
-	// 				email,
-	// 		})
-	// 	}, 400);
-  // });
 }
 
 /**
@@ -153,30 +128,6 @@ export async function apiVerify(mfaID, otpCode) {
   const user = users[pendingEmail];
   pendingEmail = null;
   return { user, method: 'mfa' };
-
-	// return new Promise( (resolve, reject) => {
-	// 	setTimeout(async () => {
-	// 		const users = await getMockUsers();
-	// 			console.log(users)
-	// 		if (!pendingEmail) {
-	// 			reject(new Error('No auth in process!'));
-	// 			return;
-	// 		}
-	// 		const now = Date.now();
-	// 		if (now > codeExpiresAt) {
-	// 			reject(new Error('Time is up! Code is expired. Try again!'));
-	// 			return;
-	// 		}
-	// 		if (otpCode === currentOTPCode) {
-	// 			const user = users[pendingEmail];
-	// 			pendingEmail = null;
-	// 			resolve({user, method: 'mfa'});
-	// 		} else {
-	// 			reject(new Error('Invalid OTP Code!'));
-	// 			return;
-	// 		}
-	// 	}, 400);
-	// });
 }
 
 /**
@@ -195,22 +146,6 @@ export async function apiResend() {
 	codeExpiresAt = newNow + CODE_VALID_FOR;
 	resendAvailableAt = newNow + RESEND_TIME_TO_SEND;
   return { eventOccured: 'resent OTP' };
-
-	// return new Promise((resolve, reject) => {
-	// 		const now = Date.now();
-	// 		if (now < resendAvailableAt) {
-	// 				return reject(new Error("Please wait before resending"));
-	// 		}
-
-	// 		setTimeout(() => {
-	// 				currentOTPCode = generateOTPCode();
-	// 				const now = Date.now();
-	// 				codeExpiresAt = now + CODE_VALID_FOR;
-	// 				resendAvailableAt = now + RESEND_TIME_TO_SEND;
-
-	// 				resolve({ eventOccured: 'resent OTP'});
-	// 		}, 200);
-	// })
 }
 
 /**
@@ -241,29 +176,4 @@ export async function apiAddUser(name, email, password) {
 	// Save the updated array back to sessionStorage
 	sessionStorage.setItem('mockUsers', JSON.stringify(existingUsers));
 	return({newUser});
-
-	// return new Promise((resolve, reject) => {
-	// 	const existingUsers = getMockUsers() || [];
-	// 	if (existingUsers[email]) {
-	// 		return reject(new Error("This user already exists. Try signing in."));
-	// 	}
-
-	// 	setTimeout(() => {
-	// 		const newUser = {
-	// 			id: existingUsers.length+1,
-	// 			email: email,
-	// 			password: btoa(password),
-	// 			name: name,
-	// 			role: 'user'
-	// 		}
-			
-	// 		// Add the new user to the array
-	// 		existingUsers[email] = newUser;
-			
-	// 		// Save the updated array back to sessionStorage
-	// 		sessionStorage.setItem('mockUsers', JSON.stringify(existingUsers));
-	// 		resolve({newUser});
-	// 	}, 200);
-	// })
-
 }
