@@ -10,13 +10,14 @@ export default function AssignmentCreationForm({handleAssignmentSubmit}) {
 	/* ---------------- Events and Handlers ---------------- */
   const handleSubmit = (e) => {
     e.preventDefault();
+		const newDate = new Date();
     const newAssignment= {
-			id: `${subject}_${new Date()}`,
+			id: `${subject}_${newDate}`,
 			title: assignmentTitle,
 			subject: subject,
 			description: description,
 			dueDate: dueDate,
-			assignedOn: new Date().toISOString().split('T')[0], // YYYY-MM-DD format    
+			assignedOn: newDate.toISOString().split('T')[0], // YYYY-MM-DD format    
     };
     handleAssignmentSubmit(newAssignment);
   }
@@ -55,6 +56,7 @@ export default function AssignmentCreationForm({handleAssignmentSubmit}) {
 			</div>
 			<div>
 				<label htmlFor="dueDate">Due Date:</label>
+				<br/>
 				<input
 					type="date"
 					id="dueDate"
@@ -64,7 +66,7 @@ export default function AssignmentCreationForm({handleAssignmentSubmit}) {
 				/>
 			</div>
 			<div className="form-actions">
-				<button type="submit">Create Assignment</button>
+				<button className="primary submit-create" type="submit">Create</button>
 			</div>
 		</form>
 	)

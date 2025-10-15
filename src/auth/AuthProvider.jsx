@@ -24,11 +24,10 @@ export function AuthProvider({ children }) {
 	}, []);
 
 	useEffect(() => {
+		if (stage !== 'mfa') {
+			return;
+		}
 		const timeoutId = setInterval(() => {
-			if (stage !== 'mfa') {
-				return;
-			}
-
 			const time = remainingTimeLeft();
 			setTimeoutLeft(time);
 		}, 1000);

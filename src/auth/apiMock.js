@@ -2,7 +2,7 @@ import fetchMock from '../auth/fetchMock.js';
 
 /* ---------------- Mock Saved Data ---------------- */
 let currentOTPCode = '123456';
-let pendingEmail = '';
+let pendingEmail = null;
 
 /* ---------------- Timers ---------------- */
 let codeExpiresAt = 0; // when the OTP becomes invalid
@@ -18,10 +18,10 @@ const RESEND_TIME_TO_SEND = 30 * 1000; // 30s before "Resend" allowed
  * @example
  * const result = generateOTPCode(); // 123456
  */
+let digits = '0123456789';
+const digLength = digits.length;
 function generateOTPCode() {
-    let digits = '0123456789';
     let code = '';
-    const digLength = digits.length;
     for (let i = 0; i < 6; i++) {
         // eslint-disable-next-line no-unused-vars
         code += digits[Math.floor(Math.random() * digLength)];
@@ -35,7 +35,7 @@ function generateOTPCode() {
  *
  * @returns {string} Miliseconds
  */
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve({event: 'Sleep Success'}), ms));
+const sleep = (ms) => new Promise((resolve) => setTimeout(() => resolve({event: 'Sleep Success'}), ms));
 
 /**
  * @description Retrieves time of seconds left when OTP was requested
@@ -163,7 +163,7 @@ export async function apiAddUser(name, email, password) {
 	}
 
 	const newUser = {
-		id: existingUsers.length+1,
+		id: Object.keys(existingUsers).length + 1,
 		email: email,
 		password: btoa(password),
 		name: name,

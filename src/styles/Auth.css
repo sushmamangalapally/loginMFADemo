@@ -1,4 +1,3 @@
-
 input.otp-input {
     width: 58px;
     height: 58px;
@@ -16,7 +15,6 @@ input.otp-input {
 
 input.otp-input:focus {
     border: 5px solid var(--border-focus);
-    /* border: 5px solid yellow; */
 }
 
 p.error-text {
@@ -31,4 +29,8 @@ p.error-text {
 .resend-text span:hover {
     text-decoration: underline;
     cursor: pointer;
+}
+
+input#dueDate {
+    width: 15%;
 }
