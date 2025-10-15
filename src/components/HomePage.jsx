@@ -28,7 +28,7 @@ export default function HomePage() {
     try {
       const response = await fetchMock('/assignments');
       const assignments = await response.json();
-      setAssignmentData(assignments)
+      setAssignmentData(assignments);
     } catch (error) {
         console.error('Failed to fetch assignments:', error);
         setError('Failed to fetch assignments. Please try again later.');

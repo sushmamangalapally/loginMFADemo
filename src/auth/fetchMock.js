@@ -1,5 +1,10 @@
-import { assignments } from './mockData.js';
-
+import { assignments, users } from './mockData.js';
+/**
+ * Fetches data from '/assignments' API endpoint.
+ * @param {string} url - The URL of the API endpoint to fetch data from.
+ * @returns {Promise<Object>} A Promise that resolves with the parsed JSON data from the API.
+ * @returns {Reject} If no data is found
+ */
 function fetchMock(url) {
   return new Promise((resolve, reject) => {
     // Simulate network delay of 400ms
@@ -8,9 +13,12 @@ function fetchMock(url) {
       if (url.includes('/assignments')) {
         data = assignments;
       }
+      else if (url.includes('/users')) {
+        data = users;
+      }
 
       if (data) {
-        // Resolve the promise with a Assignment Mock Response object
+        // Resolve the promise with  Mock Response object
         resolve({
           ok: true,
           status: 200,
