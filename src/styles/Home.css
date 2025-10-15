@@ -1,0 +1,206 @@
+body {
+    display: block;
+        height: 100%;
+        margin: 0px;
+}
+
+#root {
+    max-width: none;
+}
+
+.container {
+    max-width: none;
+    margin: 0 auto;
+    padding: 0px;
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    grid-template-rows: auto 1fr;
+    min-height: 100vh;
+    min-width: 100vh;
+}
+
+nav {
+    padding: 24px;
+}
+
+nav p.user-info {
+    text-align: center;
+}
+
+nav .nav-links p {
+    padding: 10px 14px;
+    margin: 4px 0;
+    border-radius: 10px;
+}
+
+nav .nav-links p:hover{
+    background: var(--bg-hover);
+    cursor: pointer;
+} 
+
+nav .nav-links p.active {
+    background: var(--brand-light);
+    color: var(--brand);
+    font-weight: 600;
+}
+
+aside {
+    grid-row: 1 / span 2;
+    background: var(--bg-light);
+    border-right: 1px solid var(--border);
+    padding: 18px 12px;
+    top: 0;
+    height: 100vh;
+    overflow: auto;
+}
+
+header {
+    background: var(--bg-light);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px;
+}
+
+.profile-picture-icon {
+    background: var(--brand);
+    border-radius: 50%;
+}
+
+.welcome-block h1 {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.header-actions {
+    display: flex
+;
+    align-items: center;
+    gap: 10px;
+}
+
+.class-info {
+    background: var(--brand-light);
+    border: 1px solid  var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 22px;
+}
+
+.user-info {
+    margin: 18px 0;
+}
+
+main {
+    padding: 20px;
+}
+
+.toolbar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 18px 0;
+    flex-wrap: wrap;
+}
+
+.toolbar .title {
+    font-weight: 700;
+    margin-right: auto;
+}
+
+.input-search label {
+    display: none;
+}
+
+.input-search {
+    width: min(460px, 100%);
+    cursor: text;
+    flex: 1 0 280px;
+}
+
+.homepage input[type="text"], .homepage input[type="date"] {
+    width: 100%;
+    border: 0;
+    outline: 0;
+    font-size: 14px;
+    background: transparent;
+    border: 1px solid var(--input-border);
+    background: var(--bg-light);
+    border-radius: 10px;
+    height: 40px;
+    padding: 0 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.user-info label {
+    font-weight: 700;
+    margin-right: auto;
+}
+
+.user-info input, .user-info input[type="text"] {
+    outline: 0;
+    font-size: 14px;
+    border: 1px solid var(--border);
+    background: var(--bg-light);
+    border-radius: 10px;
+    height: 40px;
+    padding: 0 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1rem;
+    width: 40%;
+}
+
+.user-info input:disabled {
+    background: var(--disabled);
+    cursor: not-allowed;
+}
+
+table {
+    text-align: left;
+    width: 100%;
+
+}
+tbody td {
+    padding: 14px 6px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+}
+
+.create-assignment {
+    margin: 20px 0;
+}
+
+
+.card form div {
+    text-align: left;
+}
+
+.card table td button {
+    margin: 0 10px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;margin-top: 30px;
+}
+
+.form-actions-cancel {
+    display: flex;
+    justify-content: flex-start;margin-top: 30px;
+
+}
+
+.card form div {
+    max-width: 100%;
+    margin: 25px 0;
+    font-weight: 700;
+}
+

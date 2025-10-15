@@ -1,17 +1,24 @@
 :root{
+  --brand: #8A2BE2;
+  --brand-hover: #4e1880;
+  --brand-light: #efeefe;
+  --cta: #FFD700;
+  --bg-light: #ffffff;
   --bg: #f3f5f9;
-  --card: #ffffff;
+  --bg-hover: #f4f5fb;
   --text: #1c1f26;
-  --muted: #7a7f8c;
-  --brand: rgb(5, 51, 184);  
-  --brand-hover: rgb(82, 125, 250);         /* purple/indigo */
-  --brand-weak: #e7e8ff;
   --brand-text-color: rgb(244, 244, 246);
-  --border: #e4e7ee;
-  --success: #12b981;
+  --success: #32CD32;
+  --error: rgb(151, 2, 2);
+  --disabled-button: rgb(233, 233, 237);
+  --disabled: #d0d0d078;
   --radius: 14px;
   --shadow-md: 0 8px 24px rgba(20, 25, 40, 0.08);
-  --error: rgb(151, 2, 2);
+  --card: #ffffff;
+  --input-border: rgb(55, 59, 69);
+  --border: #e4e7ee;
+  --border-focus: #929292;
+  --muted: #7a7f8c;
 }
 
 *{
@@ -20,21 +27,16 @@
 
 #root {
   max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
 }
 
-html, body {
-  height: 100%;
-}
 
-  body{
-    margin:0;
-    font-family: "Helvetica Neue", Arial;
-    color:var(--text);
-    background: var(--bg);
-  }
+body{
+  margin:0;
+  font-family: "Helvetica Neue", Arial;
+  color:var(--text);
+  background: var(--bg);
+  min-height: 100vh;
+}
 
 .container {
   max-width: 960px; margin: 0 auto; padding: 24px;
@@ -60,10 +62,11 @@ button.light {
 
 button:hover {
     background: var(--brand-hover);
+    color: var(--brand-text-color);
 }
 
 button:disabled {
-    background: rgb(233, 233, 237);
+    background: var(--disabled-button);
     color: var(--muted);
 }
 

@@ -4,34 +4,17 @@ import './App.css'
 import LoginPage from "./components/LoginPage";
 import MFAPage from "./components/MFAPage";
 import HomePage from "./components/HomePage";
-import ErrorPage from "./components/ErrorPage";
-
-
-
 
 function App() {
-  const { stage, user, logout } = useAuth();
-
-  // if (stage === 'login') {
-  //   return <LoginPage/>
-  // }
-
-  // if (stage === 'mfa') {
-  //   return <MFAPage/>
-  // }
-
-  if (!user && stage === 'error') {
-    return <ErrorPage/>
-  }
+  const { stage } = useAuth();
 
   return (
     <div className="container">
-        {stage === 'login' && <LoginPage/>}
-        {stage === 'mfa' && <MFAPage/>}
-        {stage === 'home' && <HomePage/>}
-        {/* <button onClick={logout}>Logout</button> */}
+      {stage === 'login' && <LoginPage/>}
+      {stage === 'mfa' && <MFAPage/>}
+      {stage === 'home' && <HomePage/>}
     </div>
   )
 }
 
-export default App
+export default App;

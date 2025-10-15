@@ -1,11 +1,12 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect, useContext } from 'react';
-import { apiLogin, apiVerify, apiResend, remainingTimeLeft } from "./apiMock";
+import { apiLogin, apiVerify, apiResend, remainingTimeLeft, apiAddUser } from "./apiMock";
 import { AuthContext } from './AuthContext';
 
 export function AuthProvider({ children }) {
     const [stage, setStage] = useState('login');
-    const [email, setEmail] = useState('login');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [user, setUser] = useState(null);
@@ -27,15 +28,19 @@ export function AuthProvider({ children }) {
         return () => clearInterval(timeoutId);
     }, [stage]);
 
-    const startLogin = async (email) => {
+    const startLogin = async (email, password) => {
+        console.log('Starting login for', email);
         try {
             setLoading(true);
             setError(null);
             setEmail(email);
-            const results = await apiLogin(email);
+            setPassword(password);
+            const results = await apiLogin(email, password);
+            console.log('Login successful:', results);
             setMfaID(results.mfaID);
             setStage('mfa');
         } catch (err) {
+            console.log(err);
             setError(err.message || 'Login failed. Try again.');
         } finally {
             setLoading(false);
@@ -77,7 +82,36 @@ export function AuthProvider({ children }) {
         setStage('login');
     }
 
+    const backtoLogin = () => {
+        setLoading(false);
+        setError(null);
+        setUser(null);
+        setMfaID(null);
+        setTimeoutLeft(0);
+        setStage('login');
+    }
+
     const clearError = () => setError(null);
+
+    const createLogin = async (name, email, password) => {
+        try {
+            setLoading(true);
+            setError(null);
+            // Here you would typically call an API to create the user
+            // For this mock, we'll just simulate a successful signup and login
+            console.log('Creating user:', name, email, password);
+            await apiAddUser(name, email, password);
+            // await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate network delay
+            // Automatically log in the user after signup
+            await startLogin(email, password);
+        } catch (err) {
+            console.log('createLogin error');
+            console.log(err);
+            setError(err.message || 'Signup failed. Try again.');
+        } finally {
+            setLoading(false);
+        }
+    }
 
     const value = {
         stage,
@@ -92,7 +126,9 @@ export function AuthProvider({ children }) {
         verifyOTPCode,
         resendOTPCode,
         logout,
-        clearError
+        backtoLogin,
+        clearError,
+        createLogin
     };
 
     return (
@@ -101,6 +137,3 @@ export function AuthProvider({ children }) {
         </AuthContext.Provider>
     );
 }
-
-// eslint-disable-next-line react-refresh/only-export-components
-// export const useAuth = () => useContext(AuthContext);

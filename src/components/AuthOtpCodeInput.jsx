@@ -4,13 +4,15 @@ import { useAuth } from "../auth/useAuth";
 import '../styles/Auth.css';
 
 export default function AuthOtpCodeInput() {
+  /* ---------------- Context state ---------------- */
     const { verifyOTPCode, timeoutLeft, loading, error, clearError, resendOTPCode, } = useAuth();
 
+    /* ---------------- UI state ---------------- */
     const INPUT_LENGTH = 6;
-
     const [code, setCode] = useState(new Array(INPUT_LENGTH).fill(''));
     const [focusedIndex, setFocusedIndex] = useState(0);
 
+    /* ---------------- Events and Handlers ---------------- */
     function onFocus(index) {
         setFocusedIndex(index);
     }

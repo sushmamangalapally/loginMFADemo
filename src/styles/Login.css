@@ -1,7 +1,6 @@
 .center-section {
     min-height: 100vh;
     padding: 40px 16px;
-
     align-items: center;
     display: flex;
     flex-wrap: wrap;
@@ -19,6 +18,7 @@
     box-shadow: var(--shadow-md);
     padding: 28px;
     background: var(--card);
+    text-align: center;
 }
 
 .card h1.title {
@@ -39,30 +39,35 @@
     display: block;
 }
 
-.input-group input[type="email"] {
+.input-group input[type="email"], .input-group input[type="password"], .login-form .input-group input[type="text"] {
     font-size: 1rem;
     line-height: 1rem;
     border-radius: 0px;
-    color: rgb(20, 24, 36);
+    color: var(--text);
     height: 3rem;
     padding-left: 1rem;
     padding-right: 1rem;
-    border: 1px solid rgb(55, 59, 69);
+    border: 1px solid var(--input-border);
     width: 100%;
 }
 
-/* .login-form button {
-    padding: 0px 1rem;
-    width: 100%;
-    border-radius: 0.25rem;
-    height: 3rem;
-    background: rgb(233, 233, 237);
-    color: rgb(173, 175, 179);
-    background: var(--brand);
-    color: rgb(244, 244, 246);
-    border: none;
+p.sign-up {
+    font-size: 1.25em;
 }
 
- */
+.sign-up span {
+    font-weight: 700;
+    cursor: pointer;
+}
 
+.sign-up span:hover {
+    color: var(--brand-hover)
+}
 
+.back-login {
+    text-align: left;
+}
+
+form.signin-form p.error-text {
+    text-align: left;
+}
