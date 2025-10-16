@@ -233,7 +233,7 @@ export default function HomePage() {
         )}
         {
           showCreateAssignment && (
-            <div ref={targetScrollRef} className="card sdew">
+            <div ref={targetScrollRef} className="card">
               <AssignmentCreationForm
                 handleAssignmentSubmit={handleAssignmentSubmit}
               />
