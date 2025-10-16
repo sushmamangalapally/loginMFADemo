@@ -22,6 +22,21 @@ body {
     min-width: 100vh;
 }
 
+@media (max-width: 767px) {
+    nav {
+        display: flex;
+        align-content: center;
+        flex-wrap: wrap;
+        flex-direction: column;
+    }
+    div.layout  {
+        grid-template-columns: 1fr;
+    }
+    .profile-picture-icon {
+        width: 25%;
+    }
+}
+
 nav {
     padding: 24px;
 }

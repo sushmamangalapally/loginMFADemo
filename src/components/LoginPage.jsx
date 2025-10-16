@@ -89,7 +89,7 @@ export default function LoginPage() {
 								<button
 									type="submit"
 									disabled={errorEmail || error || loading}
-									className="primary login-button">Next</button>
+									className="primary login-button">{loading ? 'Loading' : 'Next'}</button>
 								{error && <p className="error-text">{error}</p>}
 							</form>
 							<p className="sign-up">Don't have account yet? <span onClick={toggleSignUp}>Sign up</span></p>

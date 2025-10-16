@@ -32,5 +32,6 @@ p.error-text {
 }
 
 input#dueDate {
-    width: 15%;
+    width: 12%;
+    min-width: 165px;
 }
