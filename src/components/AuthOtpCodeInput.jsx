@@ -12,6 +12,7 @@ export default function AuthOtpCodeInput() {
 	const [code, setCode] = useState(new Array(INPUT_LENGTH).fill(''));
 	const [focusedIndex, setFocusedIndex] = useState(0);
 
+
 	/* ---------------- Events and Handlers ---------------- */
 	function onFocus(index) {
 		setFocusedIndex(index);
@@ -59,7 +60,7 @@ export default function AuthOtpCodeInput() {
 		}
 
 		if (keyPressed === 'ArrowRight') {
-			if (index < length - 1){
+			if (index < INPUT_LENGTH - 1){
 				setFocusedIndex(index + 1);
 			}
 		}
@@ -73,10 +74,26 @@ export default function AuthOtpCodeInput() {
 	}
 
 	const onReset = () => {
-		console.log('reset');
-		setCode(new Array(6).fill(''));
+		setCode(new Array(INPUT_LENGTH).fill(''));
+		setFocusedIndex(0);
 		clearError();
 	}
+
+	const handlePaste = async (event) => {
+    event.preventDefault();
+
+		// Text from copied data
+    const text = event.clipboardData.getData('text/plain');
+		if (/[^0-9]/.test(text) || text.length !== INPUT_LENGTH) {
+			return;
+		}
+
+		const newCode = text.split('');
+		setCode(newCode);
+		if (newCode.every(num => num !== '')) {
+			verifyOTPCode(newCode.join(''));
+		}
+  };
 
 	return (
 		<div className="otp-input-container">
@@ -86,6 +103,7 @@ export default function AuthOtpCodeInput() {
 						key={index}
 						index={index}
 						value={num}
+						onPaste={handlePaste}
 						onFocus={() => onFocus(index)}
 						isFocused={focusedIndex === index}
 						onChange={(e) => handleChange(e, index)}
@@ -96,12 +114,13 @@ export default function AuthOtpCodeInput() {
 					
 				<button
 					type="submit"
-					disabled={code.length < 6 || loading}
+					disabled={code.length < INPUT_LENGTH || loading}
 					className="primary verify-button">
 						{!loading ? 'Verify' : 'Loading'}
 				</button>
 					
 				<button
+					type="button"
 					onClick={onReset}
 					disabled={code.length === 0 || loading}
 					className="primary light verify-button">
@@ -116,6 +135,7 @@ export default function AuthOtpCodeInput() {
 				<p
 					className="resend-text">Didn’t get the code? </p>
 				<button
+					type="button"
 					onClick={resendOTPCode}
 					disabled={timeoutLeft > 0 || loading}
 					className="resend-button">

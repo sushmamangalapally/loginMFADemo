@@ -6,15 +6,15 @@ export default function InputDigit({ index, value, isFocused, ...props}) {
 
   /* ---------------- Auto focus on input ---------------- */
   useEffect(() => {
-      if (isFocused && inputRef?.current) {
-          inputRef?.current?.focus();
-      }
-  }, [isFocused]);
+    if (isFocused && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isFocused, index, value]);
 
   return (
     <input
-      type="text"
       ref={inputRef}
+      type="text"
       pattern="[0-9]*"
       maxLength="1"
       value={value}
@@ -22,8 +22,6 @@ export default function InputDigit({ index, value, isFocused, ...props}) {
       id={`otp-${index}`}
       data-otp-index={index}
       className={ `otp-input ${isFocused ? 'focused' : ''}` }
-      
-      // className={'otp-input'}
       {...props}
     />
   )

@@ -48,12 +48,15 @@ Sample Authentication Users You Can Use:
 - Admin User Access:
     - email: 'admin@sushma.com',
     - password: 'password1!'
+    - OTP: '123456'
 - Regular User 1 Access:
     - email: 'sushma@sushma.com',
     - password: 'password2!'
+    - OTP: '123456'
 - Regular User 2 Access:
     - email: 'user@example.com',
     - password: 'password3!'
+    - OTP: '123456'
 
 
 ## Running Tests
