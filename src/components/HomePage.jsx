@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import '../styles/Home.css';
 import fetchMock from '../auth/fetchMock.js';
 import { useAuth } from "../auth/useAuth";
@@ -6,6 +6,9 @@ import AssignmentCreationForm from './AssignmentCreationForm.jsx';
 import nounPersonIcon from '../assets/nounPersonIcon.svg'
 
 export default function HomePage() {
+  /*---------------- Refs ---------------- */
+  const targetScrollRef = useRef(null);
+
   /* ---------------- Context state ---------------- */
   const { user, logout } = useAuth();
 
@@ -35,11 +38,22 @@ export default function HomePage() {
     }
   }
 
+  /* ---------------- Side Effects ---------------- */
   useEffect(() => {
       fetchData();
   }, []);
 
+  useEffect(() => {
+    if (showCreateAssignment) {
+      scrollToTarget();
+    }
+  }, [showCreateAssignment]);
+
   /* ---------------- Events and Handlers ---------------- */
+  const toggleAssignmentForm = () => {
+    setShowCreateAssignment((prev) => !prev);
+  }
+
   const handleAssignmentSubmit = (assignmentObjData) => {
     setAssignmentData(prevData => [...prevData, assignmentObjData]);
     setShowCreateAssignment(false);
@@ -80,7 +94,14 @@ export default function HomePage() {
   const cancelEdit = () => {
     setEditAssignment(null);
     clearDraft();
-  }
+  } 
+  
+  const scrollToTarget = () => {
+    console.log('scrolling to target');
+    console.log(targetScrollRef.current)
+    targetScrollRef.current.scrollIntoView({ top: window.scrollY + 1500, behavior: 'smooth' }); // Scrolls smoothly to the element
+  };
+
 
   return (
     <div className="layout homepage">
@@ -207,17 +228,17 @@ export default function HomePage() {
         </div>
         {user.role === 'admin' && (
           <div className="create-assignment">
-            <button className="btn primary cr-assgmt" onClick={() => setShowCreateAssignment(true)}>Create Assignment</button>
+            <button className="btn primary cr-assgmt" onClick={toggleAssignmentForm}>Create Assignment</button>
           </div>
         )}
         {
           showCreateAssignment && (
-            <div className="card">
+            <div ref={targetScrollRef} className="card sdew">
               <AssignmentCreationForm
                 handleAssignmentSubmit={handleAssignmentSubmit}
               />
               <div className="form-actions-cancel">
-                <button className="btn cr-assgmt" onClick={() => setShowCreateAssignment(false)}>Cancel</button>
+                <button className="btn cr-assgmt" onClick={toggleAssignmentForm}>Cancel</button>
               </div>
             </div>
           )

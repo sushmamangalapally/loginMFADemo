@@ -36,15 +36,32 @@ export default function AuthOtpCodeInput() {
 	};
 
 	const handleKeyDown = (e, index) => {
-		if (e.key === 'Backspace' && !code[index] && index > 0) {
-			const newCode = [...code];
-			newCode[index - 1] = '';
-			setCode(newCode);
-			setFocusedIndex(index - 1);
-		} else if (e.key === 'ArrowLeft' && index > 0) {
-			setFocusedIndex(index - 1);
-		} else if (e.key === 'ArrowRight' && index < length - 1) {
-			setFocusedIndex(index + 1);
+		const keyPressed = e.key;
+
+		if (keyPressed === 'Backspace') {
+			const next = [...code];
+
+			if (next[index]) {
+				next[index] = '';
+				setCode(next);
+				setFocusedIndex(index);
+			} else if (index > 0) {
+				next[index - 1] = '';
+				setCode(next);
+				setFocusedIndex(index - 1);
+			}
+		}
+
+		if (keyPressed === 'ArrowLeft') {
+			if (index > 0){
+				setFocusedIndex(index - 1);
+			}
+		}
+
+		if (keyPressed === 'ArrowRight') {
+			if (index < length - 1){
+				setFocusedIndex(index + 1);
+			}
 		}
 	};
 
@@ -56,8 +73,8 @@ export default function AuthOtpCodeInput() {
 	}
 
 	const onReset = () => {
+		console.log('reset');
 		setCode(new Array(6).fill(''));
-		setFocusedIndex(0);
 		clearError();
 	}
 
@@ -68,6 +85,7 @@ export default function AuthOtpCodeInput() {
 					<InputDigit
 						key={index}
 						index={index}
+						value={num}
 						onFocus={() => onFocus(index)}
 						isFocused={focusedIndex === index}
 						onChange={(e) => handleChange(e, index)}
